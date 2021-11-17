@@ -13,6 +13,7 @@ import com.example.gameapp.R.drawable.button_bg
 import com.example.gameapp.R.drawable.button_bg_click
 import com.example.gameapp.databinding.ActivityMainBinding
 import com.example.gameapp.interfaces.OnFragmentActionsListener
+import com.example.gameapp.services.SoundUtils
 import com.example.gameapp.ui.login.LoginFragment
 
 
@@ -20,14 +21,13 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var videoBg: VideoView
+
+    // Video/Music Resources
     private lateinit var videoMediaPlayer: MediaPlayer
-//    private lateinit var musicMediaPlayer: MediaPlayer
-//    private lateinit var effectsMediaPlayer: MediaPlayer
+    var videoUri: Uri = Uri.parse("android.resource://" + packageName + "/" + R.raw.main_video_bg_vert_2)
+
     private var mCurrentPosition: Int = 0
-
-    private var soundUtils: SoundUtils = SoundUtils()
-
-    var menuButtons = arrayListOf<Button>()
+    private var menuButtons = arrayListOf<Button>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -37,21 +37,6 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//      Video/Music Resources
-        var videoUri: Uri = Uri.parse("android.resource://" + packageName + "/" + R.raw.main_video_bg_vert_2)
-        var musicUri: Uri = Uri.parse("android.resource://" + packageName + "/" + R.raw.bg_menu_music)
-        var btnEffectUri: Uri = Uri.parse("android.resource://" + packageName + "/" + R.raw.button_click_1)
-
-//      Button effects
-//        effectsMediaPlayer = MediaPlayer.create(this, btnEffectUri)
-//        effectsMediaPlayer.setVolume(1F, 1F)
-
-
-//      Music background
-//        musicMediaPlayer = MediaPlayer.create(this, musicUri)
-//        musicMediaPlayer.setVolume(0.5F, 0.5F)
-//        musicMediaPlayer.isLooping = true
-//        musicMediaPlayer.start()
 
 //      Video background
         videoBg = findViewById(R.id.videoView)
@@ -71,60 +56,72 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
         }
 
 //      Main Menu
-        menuButtons.add(0, binding.innerContent.menuBtn1)
-        menuButtons.add(1, binding.innerContent.menuBtn2)
-        menuButtons.add(2, binding.innerContent.menuBtn3)
+        menuButtons.add(0, binding.menuBtn1)
+        menuButtons.add(1, binding.menuBtn2)
+        menuButtons.add(2, binding.menuBtn3)
 
         menuButtons[1].setTextColor(Color.LTGRAY)
         menuButtons[2].setTextColor(Color.LTGRAY)
 
+//        Al primer boton se le añade funcionalidad extra
         menuButtons[0].setOnClickListener{
             clickButton( it )
             cargarFragment( LoginFragment() )
         }
 
+        menuButtons[1].setOnClickListener{
+            clickButton( it )
+        }
+
+        menuButtons[2].setOnClickListener{
+            clickButton( it )
+        }
+
     }
+
 
     override fun onPause() {
         super.onPause()
-//        musicMediaPlayer.pause()
         videoBg.pause()
 
-        soundUtils.stopBgMusic()
+        SoundUtils.pauseBgMusic()
     }
 
     override fun onResume() {
         super.onResume()
         videoBg.start()
-//        musicMediaPlayer.start()
 
-        if( soundUtils.isMusicInit() && !soundUtils.isMusicPlaying() ) soundUtils.resumeBgMusic()
+        if( SoundUtils.isMusicInit() &&
+            !SoundUtils.isMusicPlaying()
+        )
+            SoundUtils.resumeBgMusic()
+
     }
+
+//    override fun onStop() {
+//        super.onStop()
+//        SoundUtils.removeBgMusic()
+//        Log.i("stop", "SSSSSTTTOOOOOPPPP")
+//    }
 
     override fun onDestroy() {
         super.onDestroy()
         videoMediaPlayer.release()
-        soundUtils.removeBgMusic()
-//        musicMediaPlayer.release()
-//        effectsMediaPlayer.release()
     }
-
 
 
     fun resetButtons(){
 
-        for ( i in menuButtons ){
-            i.setBackgroundResource( button_bg )
-            i.animate().scaleX(1F)
-            i.animate().scaleY(1F)
+        for ( button in menuButtons ){
+            button.setBackgroundResource( button_bg )
+            button.animate().scaleX(1F)
+            button.animate().scaleY(1F)
         }
     }
 
     fun clickButton(view: View){
 
-//        effectsMediaPlayer.start()
-
-        soundUtils.onClickBtn( applicationContext )
+        SoundUtils.onClickBtn( applicationContext )
 
         resetButtons()
 
@@ -136,10 +133,10 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
 
     fun cargarFragment(fragment: Fragment){
 
-        binding.innerContent.mainMenuButtons.animate().translationX(600F)
+        binding.mainMenuButtons.animate().translationX(600F)
 
         val fragmentIntercambio = supportFragmentManager.beginTransaction()
-        fragmentIntercambio.replace( binding.innerContent.menuFragmentContainer.id, fragment)
+        fragmentIntercambio.replace( binding.menuFragmentContainer.id, fragment)
         fragmentIntercambio.commit()
     }
 
@@ -149,7 +146,7 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
 
     override fun onCloseFragment() {
 
-        binding.innerContent.mainMenuButtons.animate().translationX(0F)
+        binding.mainMenuButtons.animate().translationX(0F)
     }
 
 

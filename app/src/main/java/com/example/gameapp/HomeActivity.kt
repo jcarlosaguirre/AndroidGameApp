@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.gameapp.databinding.ActivityHomeBinding
+import com.example.gameapp.services.SoundUtils
 import com.example.gameapp.ui.main.SectionsPagerAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -15,6 +16,8 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if( !SoundUtils.isMusicInit() ) SoundUtils.initBgMusic( applicationContext )
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -31,4 +34,20 @@ class HomeActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        if( SoundUtils.isMusicInit() && !SoundUtils.isMusicPlaying() ) SoundUtils.resumeBgMusic()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        SoundUtils.pauseBgMusic()
+    }
+
+//    override fun onStop() {
+//        super.onStop()
+//        SoundUtils.removeBgMusic()
+//    }
+
 }

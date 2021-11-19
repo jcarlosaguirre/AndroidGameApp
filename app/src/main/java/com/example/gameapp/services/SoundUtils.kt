@@ -1,16 +1,14 @@
 package com.example.gameapp.services
 
-import android.app.Application
 import android.content.Context
 import android.media.MediaPlayer
 import com.example.gameapp.R
-import com.example.gameapp.interfaces.SoundsInterface
+import com.example.gameapp.interfaces.SoundsControlsInterface
 
-class SoundUtils : Application() {
+class SoundUtils {
 
 
-
-    companion object : SoundsInterface {
+    companion object : SoundsControlsInterface {
 
 
         private lateinit var buttonPlayer: MediaPlayer
@@ -31,7 +29,7 @@ class SoundUtils : Application() {
             buttonPlayer.start()
         }
 
-        fun initBgMusic(ctx: Context) {
+        override fun initBgMusic(ctx: Context) {
 
             musicPlayer = MediaPlayer.create(ctx, musicBg)
             musicPlayer.isLooping = true // Set looping
@@ -41,15 +39,16 @@ class SoundUtils : Application() {
             bgMusicInit = true
         }
 
-        fun pauseBgMusic() { musicPlayer.pause() }
-        fun resumeBgMusic() { musicPlayer.start() }
+        override fun pauseBgMusic() { musicPlayer.pause() }
 
-        fun removeBgMusic() {
+        override fun resumeBgMusic() { musicPlayer.start() }
 
-            musicPlayer.stop()
-            musicPlayer.release()
-            bgMusicInit = false
-        }
+//        fun removeBgMusic() {
+//
+//            musicPlayer.stop()
+//            musicPlayer.release()
+//            bgMusicInit = false
+//        }
 
         fun isMusicInit(): Boolean { return bgMusicInit }
         fun isMusicPlaying(): Boolean { return musicPlayer.isPlaying }

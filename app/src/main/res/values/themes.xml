@@ -32,6 +32,7 @@
 
     <style name="Theme.GameApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
     <style name="Theme.GameApp.Fullscreen" parent="Theme.GameApp">
         <item name="android:actionBarStyle">@style/Widget.Theme.GameApp.ActionBar.Fullscreen</item>
         <item name="android:windowActionBarOverlay">true</item>

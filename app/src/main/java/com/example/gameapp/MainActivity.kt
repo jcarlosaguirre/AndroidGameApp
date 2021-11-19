@@ -1,8 +1,6 @@
 package com.example.gameapp
 
 import android.graphics.Color
-import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -14,6 +12,7 @@ import com.example.gameapp.R.drawable.button_bg_click
 import com.example.gameapp.databinding.ActivityMainBinding
 import com.example.gameapp.interfaces.OnFragmentActionsListener
 import com.example.gameapp.services.SoundUtils
+import com.example.gameapp.services.VideoUtils
 import com.example.gameapp.ui.login.LoginFragment
 
 
@@ -22,11 +21,7 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var videoBg: VideoView
 
-    // Video/Music Resources
-    private lateinit var videoMediaPlayer: MediaPlayer
-    var videoUri: Uri = Uri.parse("android.resource://" + packageName + "/" + R.raw.main_video_bg_vert_2)
 
-    private var mCurrentPosition: Int = 0
     private var menuButtons = arrayListOf<Button>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,20 +35,7 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
 
 //      Video background
         videoBg = findViewById(R.id.videoView)
-        videoBg.setVideoURI( videoUri )
-        videoBg.start()
-
-        videoBg.setOnPreparedListener { mediaPlayer ->
-            run {
-                videoMediaPlayer = mediaPlayer
-                videoMediaPlayer.isLooping = true
-
-                if (mCurrentPosition != 0){
-                    videoMediaPlayer.seekTo(mCurrentPosition)
-                    videoMediaPlayer.start()
-                }
-            }
-        }
+        VideoUtils.initBgVideo( videoBg, this )
 
 //      Main Menu
         menuButtons.add(0, binding.menuBtn1)
@@ -69,12 +51,12 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
             cargarFragment( LoginFragment() )
         }
 
-        menuButtons[1].setOnClickListener{
-            clickButton( it )
-        }
+        menuButtons.forEachIndexed{ index, btn ->
 
-        menuButtons[2].setOnClickListener{
-            clickButton( it )
+            btn.setOnClickListener{
+                clickButton( it )
+                if (index == 0) cargarFragment( LoginFragment() )
+            }
         }
 
     }
@@ -82,14 +64,11 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
 
     override fun onPause() {
         super.onPause()
-        videoBg.pause()
-
         SoundUtils.pauseBgMusic()
     }
 
     override fun onResume() {
         super.onResume()
-        videoBg.start()
 
         if( SoundUtils.isMusicInit() &&
             !SoundUtils.isMusicPlaying()
@@ -106,7 +85,6 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        videoMediaPlayer.release()
     }
 
 

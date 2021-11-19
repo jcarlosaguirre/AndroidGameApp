@@ -10,10 +10,13 @@
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/button_bg.xml" value="0.37864583333333335" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/button_bg_click.xml" value="0.37864583333333335" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/login_bg_radius.xml" value="0.3828125" />
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/tabs_bg.xml" value="0.3828125" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/activity_fullscreen.xml" value="0.3523550724637681" />
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/activity_splash.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/fragment_home.xml" value="0.3523550724637681" />
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/fragment_lobby.xml" value="0.33" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/fragment_login.xml" value="0.33" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/main_video_background.xml" value="0.25" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/menu/mainmenu.xml" value="0.36666666666666664" />

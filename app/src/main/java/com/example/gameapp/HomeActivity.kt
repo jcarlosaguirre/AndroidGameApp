@@ -18,6 +18,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Iniciar música si no está activada
         if( !SoundUtils.isMusicInit() ) SoundUtils.initBgMusic( applicationContext )
 
 

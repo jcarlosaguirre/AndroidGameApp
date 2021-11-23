@@ -55,13 +55,14 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        // Cerrar fragment de login
         val btClose = binding.btCloseLogin
         btClose.setOnClickListener {
             listener?.onCloseFragment()
             closeLogin()
         }
 
+        // Abrir fragment de login
         val btLogin = binding.btLogin
         btLogin.setOnClickListener{
             accessLogin()

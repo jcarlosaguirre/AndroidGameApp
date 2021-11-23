@@ -117,6 +117,7 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
 
     fun cargarFragment(fragment: Fragment){
 
+        // Al cargar un fragment, desplaza el menú
         binding.mainMenuButtons.animate().translationX(600F)
 
         val fragmentIntercambio = supportFragmentManager.beginTransaction()
@@ -130,6 +131,7 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
 
     override fun onCloseFragment() {
 
+        // Reposiciona el menú al cerrar el fragment
         binding.mainMenuButtons.animate().translationX(0F)
     }
 

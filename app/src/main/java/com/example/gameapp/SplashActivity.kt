@@ -14,6 +14,7 @@ import kotlin.concurrent.thread
 
         SoundUtils.initBgMusic( applicationContext )
 
+        // Inicia un hilo para mostrar el splashScreen durante x segundos
         thread {
 
             try {

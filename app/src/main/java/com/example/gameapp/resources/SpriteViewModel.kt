@@ -3,6 +3,8 @@ package com.example.gameapp.resources
 import androidx.lifecycle.ViewModel
 import com.example.gameapp.R
 
+
+// ViewModel para recoger los datos necesarios desde las clases oportunas
 class SpriteViewModel : ViewModel() {
 
 

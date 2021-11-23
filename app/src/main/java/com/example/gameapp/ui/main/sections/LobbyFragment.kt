@@ -62,13 +62,14 @@ class LobbyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        // Referencia al viewModel de sprites
         spriteViewModel =
             ViewModelProvider(this).get(SpriteViewModel::class.java)
 
         _binding = FragmentLobbyBinding.inflate(inflater, container, false)
 
 
-
+        // Añadir menus clicables a diferentes botones
         val btnEquip: Button = binding.btnEquip
         btnEquip.setOnClickListener{
 
@@ -80,8 +81,6 @@ class LobbyFragment : Fragment() {
             }
             menupopup.show()
         }
-
-
 
         val btnStats: Button = binding.btnStats
         btnStats.setOnClickListener{
@@ -101,12 +100,13 @@ class LobbyFragment : Fragment() {
         /*Y le asignamos el adaptador que hemos creado previamente*/
         binding.spritesGallery.adapter = activity?.let { AdaptadorSpritesList (it, spriteViewModel.knightSprites) }
 
+        // Evento para capturar el sprite seleccionado en el grid
         binding.spritesGallery.setOnItemClickListener { parent, view, position, id ->
 
-//            if( this::currentThread.isInitialized )
             playSpriteExpositor( position )
         }
 
+        // Iniciamos el expositor seleccionando el primer sprite
         playSpriteExpositor( 0 )
 
         return binding.root
@@ -119,12 +119,15 @@ class LobbyFragment : Fragment() {
 
     fun playSpriteExpositor( position: Int ){
 
+        // Nombre y descripción del sprite
         binding.spriteName.text = spriteViewModel.knightSprites[position].nombre
         binding.spriteDetail.text = spriteViewModel.knightSprites[position].type
 
+        // Asignar animación xml al "expositor"
         val spriteExpositor = binding.spriteExpositor
         spriteExpositor.setImageResource( spriteViewModel.knightSprites[position].anim )
 
+        // Iniciar la animación
         var anim = spriteExpositor.drawable as AnimationDrawable
         anim.start()
 

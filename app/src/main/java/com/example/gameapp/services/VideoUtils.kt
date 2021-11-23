@@ -10,13 +10,15 @@ import com.example.gameapp.interfaces.VideoControlsInterface
 class VideoUtils {
 
 
+    // Clase estática para controlar el estado del video de fondo
     companion object : VideoControlsInterface {
 
 
-        // Video/Music Resources
+        // Video Resources
         private lateinit var videoMediaPlayer: MediaPlayer
         var videoUri: Uri? = Uri.parse("android.resource://com.example.gameapp/" + R.raw.main_video_bg_vert_2)!!
 
+        // Progreso actual del video
         private var mCurrentPosition: Int = 0
 
 
@@ -27,6 +29,7 @@ class VideoUtils {
 //            bgMusicInit = false
 //        }
 
+        // Inciar el video de fondo
         override fun initBgVideo(videoView: VideoView, context: Context) {
 
             videoView.setVideoURI( videoUri )
@@ -49,6 +52,7 @@ class VideoUtils {
             TODO("Not yet implemented")
         }
 
+        // Pausar la reproducción del video
         override fun pauseBgVideo() {
             videoMediaPlayer.stop()
         }

@@ -1,14 +1,22 @@
 package com.example.gameapp.ui.main.sections
 
-import android.annotation.SuppressLint
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.gameapp.R
 import com.example.gameapp.databinding.FragmentLobbyBinding
-import kotlin.concurrent.thread
+import com.example.gameapp.resources.SpriteViewModel
+
+
+
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,17 +33,16 @@ class LobbyFragment : Fragment() {
 
     // Binding
     private lateinit var _binding: FragmentLobbyBinding
-    @SuppressLint("ResourceType")
-    private var maleSprite: List<List<Int>> =
-        listOf(
-            listOf(R.raw.male_1_1, R.raw.male_1_2, R.raw.male_1_3),
-            listOf(R.raw.male_2_1, R.raw.male_2_2, R.raw.male_2_3),
-            listOf(R.raw.male_3_1, R.raw.male_3_2, R.raw.male_3_3),
-        )
+
+
+    // Modelo que incluye datos para el fragment
+    private lateinit var spriteViewModel: SpriteViewModel
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+//    private lateinit var currentThread: Thread
 
 
     // TODO: Rename and change types of parameters
@@ -55,39 +62,87 @@ class LobbyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
+        spriteViewModel =
+            ViewModelProvider(this).get(SpriteViewModel::class.java)
 
         _binding = FragmentLobbyBinding.inflate(inflater, container, false)
+
+
+
+        val btnEquip: Button = binding.btnEquip
+        btnEquip.setOnClickListener{
+
+            val menupopup = PopupMenu( requireContext(), btnEquip )
+            menupopup.inflate( R.menu.equipment_menu )
+            menupopup.setOnMenuItemClickListener{
+                Toast.makeText( requireContext() , "Opción: " + it.title, Toast.LENGTH_SHORT ).show()
+                true
+            }
+            menupopup.show()
+        }
+
+
+
+        val btnStats: Button = binding.btnStats
+        btnStats.setOnClickListener{
+
+            val menupopup = PopupMenu( requireContext(), btnStats )
+            menupopup.inflate( R.menu.stats_menu )
+            menupopup.setOnMenuItemClickListener{
+                Toast.makeText( requireContext() , "Opción: " + it.title, Toast.LENGTH_SHORT ).show()
+                true
+            }
+            menupopup.show()
+        }
+
+        /*Hacemos que el ListView responda ante los clicks*/
+        binding.spritesGallery.isClickable = true
+
+        /*Y le asignamos el adaptador que hemos creado previamente*/
+        binding.spritesGallery.adapter = activity?.let { AdaptadorSpritesList (it, spriteViewModel.knightSprites) }
+
+        binding.spritesGallery.setOnItemClickListener { parent, view, position, id ->
+
+//            if( this::currentThread.isInitialized )
+            playSpriteExpositor( position )
+        }
+
+        playSpriteExpositor( 0 )
+
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//
+//    }
+
+    fun playSpriteExpositor( position: Int ){
+
+        binding.spriteName.text = spriteViewModel.knightSprites[position].nombre
+        binding.spriteDetail.text = spriteViewModel.knightSprites[position].type
 
         val spriteExpositor = binding.spriteExpositor
-        val spriteExpositor = binding.spriteExpositor
+        spriteExpositor.setImageResource( spriteViewModel.knightSprites[position].anim )
 
+        var anim = spriteExpositor.drawable as AnimationDrawable
+        anim.start()
 
-        thread {
-
-            var count = 0
-
-            while (true){
-
-                try {
-
-                    spriteExpositor.setImageResource(maleSprite[0][count])
-                    Thread.sleep(200)
-                    count = if (count == 2) 0 else count + 1
-
-
-                } catch (err: Exception) {
-                    err.printStackTrace()
-                }
-            }
-
-        }
-
+//        currentThread = thread {
+//
+//            var count = 0
+//            while (true){
+//
+//                try {
+//                    spriteExpositor.setImageResource( spriteViewModel.knightSprites[position].sprite[count] )
+//                    Thread.sleep(200)
+//                    count = if (count == 2) 0 else count + 1
+//
+//                } catch (err: Exception) {
+//                    err.printStackTrace()
+//                }
+//            }
+//        }
     }
 
     companion object {

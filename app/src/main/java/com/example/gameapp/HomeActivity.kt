@@ -38,6 +38,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if( SoundUtils.isMusicInit() && !SoundUtils.isMusicPlaying() ) SoundUtils.resumeBgMusic()
+        VideoUtils.initBgVideo( videoBg, this )
     }
 
     override fun onPause() {

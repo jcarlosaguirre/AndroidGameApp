@@ -62,6 +62,8 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
     }
 
 
+
+
     override fun onPause() {
         super.onPause()
         SoundUtils.pauseBgMusic()
@@ -74,6 +76,10 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
             !SoundUtils.isMusicPlaying()
         )
             SoundUtils.resumeBgMusic()
+
+//      Video background
+        videoBg = findViewById(R.id.videoView)
+        VideoUtils.initBgVideo( videoBg, this )
 
     }
 

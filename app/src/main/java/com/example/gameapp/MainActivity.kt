@@ -2,10 +2,12 @@ package com.example.gameapp
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.Toast
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -15,10 +17,18 @@ import com.example.gameapp.databinding.ActivityMainBinding
 import com.example.gameapp.interfaces.OnFragmentActionsListener
 import com.example.gameapp.services.SoundUtils
 import com.example.gameapp.services.VideoUtils
-import com.example.gameapp.ui.gallery.GalleryFragment
 import com.example.gameapp.ui.login.LoginFragment
 
-
+/**
+ * Main activity.
+ *
+ * Menu where user can login or access to both credits and a gallery
+ * with resources used in the app.
+ *
+ * Implements OnFragmentActionsListener to trigger actions on activity
+ * when x action occurs in fragment.
+ *
+ */
 class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
 
     private lateinit var binding: ActivityMainBinding
@@ -40,49 +50,47 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
 //      Video background
         videoBg = findViewById(R.id.videoView)
         VideoUtils.initBgVideo( videoBg, this )
 
-//      Main Menu
+//      Array with Main Menu buttons
         menuButtons.add(0, binding.menuBtn1)
         menuButtons.add(1, binding.menuBtn2)
         menuButtons.add(2, binding.menuBtn3)
 
-        menuButtons[1].setTextColor(Color.LTGRAY)
+        // Set disabled color to buttons
         menuButtons[2].setTextColor(Color.LTGRAY)
 
-//        Al primer boton se le añade funcionalidad extra
-//        menuButtons[0].setOnClickListener{
-//            clickButton( it )
-//            cargarFragment( LoginFragment() )
-//        }
-////        Al primer boton se le añade funcionalidad extra
-//        menuButtons[1].setOnClickListener{
-//            clickButton( it )
-//            cargarFragment( GalleryFragment() )
-//        }
 
+//      Load new fragment depending on menu button pressed
         menuButtons.forEachIndexed{ index, btn ->
 
             btn.setOnClickListener{
                 clickButton( it )
-                if (index == 0) cargarFragment( LoginFragment() )
-                else if (index == 1) cargarFragment( GalleryFragment() )
+                if (index == 0) cargarFragment( LoginFragment.newInstance() )
+//                else if (index == 1) cargarFragment( GalleryFragment.newInstance() )
             }
         }
 
     }
 
 
-
-
+    /**
+     * Stop background music on activity paused
+     *
+     */
     override fun onPause() {
         super.onPause()
         SoundUtils.pauseBgMusic()
+        VideoUtils.pauseBgVideo()
+//        videoBg.pause()
     }
 
+    /**
+     * Resume music if music is initialized but paused
+     *
+     */
     override fun onResume() {
         super.onResume()
 
@@ -91,10 +99,12 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
         )
             SoundUtils.resumeBgMusic()
 
-//      Video background
-        videoBg = findViewById(R.id.videoView)
-        VideoUtils.initBgVideo( videoBg, this )
-
+//        VideoUtils.initBgVideo( videoBg, this )
+        if ( VideoUtils.isBgVideoInit() ) {
+            Log.i("AAAAA", "Holaaaaaaaa")
+            VideoUtils.resumeBgVideo()
+//            videoBg.start()
+        }
     }
 
 //    override fun onStop() {
@@ -103,11 +113,10 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
 //        Log.i("stop", "SSSSSTTTOOOOOPPPP")
 //    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-
+    /**
+     * Restore menu buttons background
+     *
+     */
     fun resetButtons(){
 
         for ( button in menuButtons ){
@@ -117,6 +126,12 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
         }
     }
 
+    /**
+     * Play button sound, change background of pressed button and
+     * grow it up
+     *
+     * @param view
+     */
     fun clickButton(view: View){
 
         SoundUtils.onClickBtn( applicationContext )
@@ -129,6 +144,11 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
 
     }
 
+    /**
+     * Move menu and load new fragment instance
+     *
+     * @param fragment
+     */
     fun cargarFragment(fragment: Fragment){
 
         // Al cargar un fragment, desplaza el menú
@@ -140,7 +160,7 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
     }
 
     override fun onClickFragmentButton() {
-        TODO("Not yet implemented")
+        Toast.makeText(this, "Hola, he pulsado un fragment", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCloseFragment() {

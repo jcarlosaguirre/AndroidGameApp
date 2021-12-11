@@ -13,4 +13,5 @@ interface VideoControlsInterface {
     fun initBgVideo(view: VideoView, context: Context )
     fun changeBgVideo()
     fun pauseBgVideo()
+    fun resumeBgVideo()
 }

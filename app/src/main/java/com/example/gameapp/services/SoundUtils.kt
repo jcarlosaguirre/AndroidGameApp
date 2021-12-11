@@ -54,9 +54,7 @@ class SoundUtils {
             bgMusicInit = true
         }
 
-        //
         override fun pauseBgMusic() { musicPlayer.pause() }
-
         override fun resumeBgMusic() { musicPlayer.start() }
 
 //        fun removeBgMusic() {
@@ -66,7 +64,11 @@ class SoundUtils {
 //            bgMusicInit = false
 //        }
 
-        // Consultar el estado de la aplicación
+        /**
+         * Check different states of background music
+         *
+         * @return
+         */
         fun isMusicInit(): Boolean { return bgMusicInit }
         fun isMusicPlaying(): Boolean { return musicPlayer.isPlaying }
 

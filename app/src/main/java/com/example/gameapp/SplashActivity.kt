@@ -6,15 +6,23 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.gameapp.services.SoundUtils
 import kotlin.concurrent.thread
 
+/**
+ * Splash Screen Activity
+ *
+ * Show blank screen for x seconds while loading data before entering the
+ * main activity.
+ *
+ */
  class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        // Start background music
         SoundUtils.initBgMusic( applicationContext )
 
-        // Inicia un hilo para mostrar el splashScreen durante x segundos
+        // Start a new Thread for loading required data and then change activity
         thread {
 
             try {

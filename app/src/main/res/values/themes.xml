@@ -21,6 +21,8 @@
         <!-- No action bar -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="Theme.GameApp.NoActionBar">

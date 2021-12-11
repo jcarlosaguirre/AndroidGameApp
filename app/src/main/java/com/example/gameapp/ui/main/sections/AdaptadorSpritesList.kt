@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import com.example.gameapp.R
-import com.example.gameapp.resources.SpriteObject
+import com.example.gameapp.classes.SpriteObject
 
 class AdaptadorSpritesList(
     private val context: Activity,

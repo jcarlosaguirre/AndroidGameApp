@@ -18,7 +18,7 @@ import kotlin.concurrent.thread
         thread {
 
             try {
-                Thread.sleep(3000)
+                Thread.sleep(1000)
             } catch (err: Exception){
                 err.printStackTrace()
             } finally {

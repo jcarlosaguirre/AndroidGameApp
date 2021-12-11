@@ -3,6 +3,10 @@ package com.example.gameapp.interfaces
 import android.content.Context
 import android.widget.VideoView
 
+/**
+ * Control video background over the app
+ *
+ */
 interface VideoControlsInterface {
 
     // Funciones a implementar en la clase que extienda esta interfaz

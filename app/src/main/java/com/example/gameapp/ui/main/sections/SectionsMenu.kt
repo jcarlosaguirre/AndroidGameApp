@@ -31,7 +31,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [LobbyFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LobbyFragment : Fragment() {
+class SectionsMenu : Fragment() {
 
 
     // Binding

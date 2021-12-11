@@ -9,7 +9,6 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
         android:theme="@style/Theme.GameApp.AppBarOverlay">
 
         <com.google.android.material.tabs.TabLayout
@@ -21,8 +20,8 @@
     <include
         android:id="@+id/innerContent"
         layout="@layout/main_video_background"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"

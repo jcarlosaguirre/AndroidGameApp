@@ -3,6 +3,8 @@ package com.example.gameapp
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +15,7 @@ import com.example.gameapp.databinding.ActivityMainBinding
 import com.example.gameapp.interfaces.OnFragmentActionsListener
 import com.example.gameapp.services.SoundUtils
 import com.example.gameapp.services.VideoUtils
+import com.example.gameapp.ui.gallery.GalleryFragment
 import com.example.gameapp.ui.login.LoginFragment
 
 
@@ -27,6 +30,11 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 //      Binding
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -46,16 +54,22 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
         menuButtons[2].setTextColor(Color.LTGRAY)
 
 //        Al primer boton se le añade funcionalidad extra
-        menuButtons[0].setOnClickListener{
-            clickButton( it )
-            cargarFragment( LoginFragment() )
-        }
+//        menuButtons[0].setOnClickListener{
+//            clickButton( it )
+//            cargarFragment( LoginFragment() )
+//        }
+////        Al primer boton se le añade funcionalidad extra
+//        menuButtons[1].setOnClickListener{
+//            clickButton( it )
+//            cargarFragment( GalleryFragment() )
+//        }
 
         menuButtons.forEachIndexed{ index, btn ->
 
             btn.setOnClickListener{
                 clickButton( it )
                 if (index == 0) cargarFragment( LoginFragment() )
+                else if (index == 1) cargarFragment( GalleryFragment() )
             }
         }
 

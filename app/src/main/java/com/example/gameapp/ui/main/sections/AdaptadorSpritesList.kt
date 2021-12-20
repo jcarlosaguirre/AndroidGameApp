@@ -9,6 +9,12 @@ import android.widget.ImageView
 import com.example.gameapp.R
 import com.example.gameapp.classes.SpriteObject
 
+/**
+ * TODO
+ *
+ * @property context
+ * @property knightSprites
+ */
 class AdaptadorSpritesList(
     private val context: Activity,
     private val knightSprites: ArrayList<SpriteObject>

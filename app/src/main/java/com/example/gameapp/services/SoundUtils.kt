@@ -19,8 +19,8 @@ class SoundUtils {
         private lateinit var musicPlayer: MediaPlayer
 
         // Audio files path
-        private val musicBg = R.raw.bg_menu_music
-        private val soundBtn = R.raw.button_click_1
+        private const val musicBg = R.raw.bg_menu_music
+        private const val soundBtn = R.raw.button_click_1
 
         // Current music initialization state
         private var bgMusicInit: Boolean = false

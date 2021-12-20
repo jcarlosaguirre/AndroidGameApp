@@ -1,62 +1,55 @@
 package com.example.gameapp.ui.main.sections
 
-import android.graphics.drawable.AnimationDrawable
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
-import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.gameapp.R
-import com.example.gameapp.classes.Character
-import com.example.gameapp.classes.SpriteViewModel
-import com.example.gameapp.databinding.FragmentLobbyBinding
-
-
-
-
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.example.gameapp.databinding.FragmentHomeBinding
+import com.example.gameapp.interfaces.OnFragmentActionsListener
+import com.example.gameapp.ui.main.PageViewModel
 
 /**
- * A simple [Fragment] subclass.
- * Use the [LobbyFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * A placeholder fragment containing a simple view.
  */
 class LobbyFragment : Fragment() {
 
+    private lateinit var pageViewModel: PageViewModel
+    private var _binding: FragmentHomeBinding? = null
 
-    // Binding
-    private lateinit var _binding: FragmentLobbyBinding
-
-
-    // Modelo que incluye datos para el fragment
-    private lateinit var spriteViewModel: SpriteViewModel
+    private var sections: Array<String> = arrayOf("Character", "Lobby", "Adventures")
+    private lateinit var btnMenu: Array<Button>
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
-//    private lateinit var currentThread: Thread
+    private var listener: OnFragmentActionsListener? = null
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
 
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+        if( context is OnFragmentActionsListener)
+            listener = context
+
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        pageViewModel = ViewModelProvider(this).get(PageViewModel::class.java).apply {
+            setIndex(arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
         }
     }
 
@@ -65,110 +58,57 @@ class LobbyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        // Referencia al viewModel de sprites
-        spriteViewModel =
-            ViewModelProvider(this).get(SpriteViewModel::class.java)
-
-        _binding = FragmentLobbyBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val root = binding.root
 
 
-        // Añadir menus clicables a diferentes botones
-        val btnStats: Button = binding.btnStats
-        btnStats.setOnClickListener{
+        val btnCharacters: Button = binding.button
+        val btnCharacters2: Button = binding.button2
+        val btnCharacters3: Button = binding.button3
 
-            val menupopup = PopupMenu( requireContext(), btnStats )
-            menupopup.inflate( R.menu.stats_menu )
-            menupopup.setOnMenuItemClickListener{
-                Toast.makeText( requireContext() , "Opción: " + it.title, Toast.LENGTH_SHORT ).show()
-                true
+        btnMenu = arrayOf( btnCharacters, btnCharacters2, btnCharacters3 )
+
+        btnMenu.forEachIndexed{ index, btn ->
+
+            btn.setOnClickListener{
+                Log.i("AAAAAA", sections[index])
+                listener?.onClickFragmentButton( "HomeSection", index, null )
+                pageViewModel.setIndex(index)
             }
-            menupopup.show()
         }
 
-        /*Hacemos que el ListView responda ante los clicks*/
-        binding.spritesGallery.isClickable = true
+        val textView: TextView = binding.sectionLabel
+        pageViewModel.text.observe(viewLifecycleOwner, Observer {
+            textView.text = it
+        })
 
-        /*Y le asignamos el adaptador que hemos creado previamente*/
-        binding.spritesGallery.adapter = activity?.let { AdaptadorSpritesList (it, spriteViewModel.knightSprites) }
 
-        // Evento para capturar el sprite seleccionado en el grid
-        binding.spritesGallery.setOnItemClickListener { parent, view, position, id ->
-
-            for ( sprite in binding.spritesGallery.children ){
-                sprite.alpha = 1f
-            }
-            playSpriteExpositor( position )
-            var selectedSprite = binding.spritesGallery.getChildAt( position )
-            selectedSprite.alpha = 0.5f
-        }
-
-        // Iniciamos el expositor seleccionando el primer sprite
-        playSpriteExpositor( 0 )
-
-        return binding.root
-    }
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//    }
-
-    fun playSpriteExpositor( position: Int ){
-
-        // Nombre y descripción del sprite
-        binding.spriteName.text = spriteViewModel.knightSprites[position].nombre
-        binding.spriteDetail.text = spriteViewModel.knightSprites[position].desc
-
-        // Asignar animación xml al "expositor"
-        val spriteExpositor = binding.spriteExpositor
-        spriteExpositor.setImageResource( spriteViewModel.knightSprites[position].anim )
-
-        // Iniciar la animación
-        var anim = spriteExpositor.drawable as AnimationDrawable
-        anim.start()
-
-        var player = Character( spriteViewModel.knightSprites[position] )
-
-        binding.healthBar.progress = player.getStats()[0] * 200 / 100
-        binding.defenseBar.progress = player.getStats()[1] * 200 / 100
-        binding.strengthBar.progress = player.getStats()[2] * 200 / 100
-        binding.magicBar.progress = player.getStats()[3] * 200 / 100
-        Log.i("BBBBBBBB", player.getStats()[0].toString() )
-
-//        currentThread = thread {
-//
-//            var count = 0
-//            while (true){
-//
-//                try {
-//                    spriteExpositor.setImageResource( spriteViewModel.knightSprites[position].sprite[count] )
-//                    Thread.sleep(200)
-//                    count = if (count == 2) 0 else count + 1
-//
-//                } catch (err: Exception) {
-//                    err.printStackTrace()
-//                }
-//            }
-//        }
+        return root
     }
 
     companion object {
         /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LobbyFragment.
+         * The fragment argument representing the section number for this
+         * fragment.
          */
-        // TODO: Rename and change types and number of parameters
+        private const val ARG_SECTION_NUMBER = "section_number"
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LobbyFragment().apply {
+        fun newInstance(sectionNumber: Int): LobbyFragment {
+            return LobbyFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putInt(ARG_SECTION_NUMBER, sectionNumber)
                 }
             }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

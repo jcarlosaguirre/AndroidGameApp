@@ -3,7 +3,7 @@ package com.example.gameapp.classes
 class Character {
 
     /**
-     * Character stats and array
+     * Character stats and array joining them
      */
     private var health: Int = 0
     private var defense: Int = 0
@@ -55,17 +55,12 @@ class Character {
      * Update stats array by setting current stats in it
      *
      */
-    private fun setStats(){
-
-        stats = arrayOf(health, defense, strength, magic)
-    }
+    private fun setStats(){ stats = arrayOf(health, defense, strength, magic) }
 
     /**
      *
      * @return stats array
      */
-    fun getStats(): Array<Int>{
-        return stats
-    }
+    fun getStats(): Array<Int>{ return stats }
 
 }

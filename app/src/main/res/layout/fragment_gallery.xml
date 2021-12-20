@@ -5,7 +5,7 @@
     android:layout_width="350dp"
     android:layout_height="500dp"
     android:layout_gravity="center_horizontal"
-    android:background="@drawable/login_bg_radius"
+    android:background="@drawable/section_rounded_bg"
     tools:context=".ui.gallery.GalleryFragment">
 
     <!-- TODO: Update blank fragment layout -->

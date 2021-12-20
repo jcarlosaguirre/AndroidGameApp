@@ -17,19 +17,22 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 /**
+ * TODO: Develop any purpose to this
  * A simple [Fragment] subclass.
  * Use the [GalleryFragment.newInstance] factory method to
  * create an instance of this fragment.
+ *
+ * GalleryFragment is used to show and explain different resources from the app
+ * that users may be interested in.
  */
 class GalleryFragment : Fragment() {
-
 
     // Binding
     private lateinit var _binding: FragmentGalleryBinding
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -38,7 +41,6 @@ class GalleryFragment : Fragment() {
     private var listener: OnFragmentActionsListener? = null
 
 
-    // Modelo que incluye datos para el fragment
     private lateinit var spriteViewModel: SpriteViewModel
 
     override fun onAttach(context: Context) {
@@ -106,12 +108,12 @@ class GalleryFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(/*param1: String, param2: String*/) =
             GalleryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+//                arguments = Bundle().apply {
+//                    putString(ARG_PARAM1, param1)
+//                    putString(ARG_PARAM2, param2)
+//                }
             }
     }
 

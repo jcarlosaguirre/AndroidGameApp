@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00FFFFFF"
-    tools:context=".ui.main.sections.LobbyFragment">
+    tools:context=".ui.main.sections.CharacterFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_height="0dp"
             android:layout_margin="30dp"
             android:layout_weight="7"
-            android:background="@drawable/login_bg_radius">
+            android:background="@drawable/section_rounded_bg">
 
             <ImageView
                 android:id="@+id/spriteExpositor"
@@ -32,10 +32,10 @@
                 app:layout_constraintVertical_bias="0.392" />
 
             <Button
-                android:id="@+id/btnStats"
+                android:id="@+id/btnCharacterSection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stats"
+                android:text="Team"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.939"
@@ -71,12 +71,67 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.536" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/teamMembers"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <ImageButton
+                    android:id="@+id/spriteExpositor2"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.056"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.356" />
+
+                <ImageButton
+                    android:id="@+id/spriteExpositor3"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:backgroundTint="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.056"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.621" />
+
+                <ImageButton
+                    android:id="@+id/spriteExpositor4"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:backgroundTint="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.943"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.356" />
+
+                <ImageButton
+                    android:id="@+id/spriteExpositor5"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:backgroundTint="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.943"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.621" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <LinearLayout
                 android:id="@+id/statsData"
                 android:layout_width="349dp"
                 android:layout_height="162dp"
                 android:orientation="vertical"
                 android:padding="15dp"
+                android:visibility="visible"
                 android:weightSum="4"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +149,7 @@
                     android:padding="5dp">
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/statHealthText"
                         android:layout_width="80dp"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -123,7 +178,7 @@
                     android:padding="5dp">
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/statDefenseText"
                         android:layout_width="80dp"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -152,7 +207,7 @@
                     android:padding="5dp">
 
                     <TextView
-                        android:id="@+id/textView6"
+                        android:id="@+id/statStrengthText"
                         android:layout_width="80dp"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -181,7 +236,7 @@
                     android:padding="5dp">
 
                     <TextView
-                        android:id="@+id/textView8"
+                        android:id="@+id/statMagicText"
                         android:layout_width="80dp"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -211,7 +266,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="80dp"
             android:layout_weight="5"
-            android:background="@drawable/login_bg_radius"
+            android:background="@drawable/section_rounded_bg"
             android:orientation="vertical">
 
             <TextView
@@ -220,9 +275,9 @@
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
                 android:padding="10dp"
-                android:text="Team"
+                android:text="Characters"
                 android:textColor="#DFDEDE"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <GridView
                 android:id="@+id/spritesGallery"

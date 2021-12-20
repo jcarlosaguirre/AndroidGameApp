@@ -2,27 +2,26 @@ package com.example.gameapp
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
-import android.widget.Toast
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.gameapp.R.drawable.button_bg
-import com.example.gameapp.R.drawable.button_bg_click
+import com.example.gameapp.R.drawable.btn_fadeleft_bg
+import com.example.gameapp.R.drawable.btn_fadeleft_bg_2
 import com.example.gameapp.databinding.ActivityMainBinding
 import com.example.gameapp.interfaces.OnFragmentActionsListener
 import com.example.gameapp.services.SoundUtils
 import com.example.gameapp.services.VideoUtils
+import com.example.gameapp.ui.gallery.GalleryFragment
 import com.example.gameapp.ui.login.LoginFragment
 
 /**
  * Main activity.
  *
- * Menu where user can login or access to both credits and a gallery
+ * Menu where user can login or access to credits, options and a gallery
  * with resources used in the app.
  *
  * Implements OnFragmentActionsListener to trigger actions on activity
@@ -31,9 +30,14 @@ import com.example.gameapp.ui.login.LoginFragment
  */
 class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
 
+    // Binding
     private lateinit var binding: ActivityMainBinding
+
+    // Background VideoView
     private lateinit var videoBg: VideoView
 
+    // Keep current fragment (login or gallery) to play some actions later
+    private var currentFragment: Fragment? = null
 
     private var menuButtons = arrayListOf<Button>()
 
@@ -50,7 +54,7 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//      Video background
+//      Background VideoView
         videoBg = findViewById(R.id.videoView)
         VideoUtils.initBgVideo( videoBg, this )
 
@@ -69,7 +73,7 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
             btn.setOnClickListener{
                 clickButton( it )
                 if (index == 0) cargarFragment( LoginFragment.newInstance() )
-//                else if (index == 1) cargarFragment( GalleryFragment.newInstance() )
+                else if (index == 1) cargarFragment( GalleryFragment.newInstance() )
             }
         }
 
@@ -83,7 +87,7 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
     override fun onPause() {
         super.onPause()
         SoundUtils.pauseBgMusic()
-        VideoUtils.pauseBgVideo()
+        VideoUtils.pauseBgVideo( videoBg )
 //        videoBg.pause()
     }
 
@@ -99,11 +103,8 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
         )
             SoundUtils.resumeBgMusic()
 
-//        VideoUtils.initBgVideo( videoBg, this )
         if ( VideoUtils.isBgVideoInit() ) {
-            Log.i("AAAAA", "Holaaaaaaaa")
-            VideoUtils.resumeBgVideo()
-//            videoBg.start()
+            VideoUtils.resumeBgVideo( videoBg )
         }
     }
 
@@ -113,6 +114,11 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
 //        Log.i("stop", "SSSSSTTTOOOOOPPPP")
 //    }
 
+    override fun onStop() {
+        if( currentFragment != null ) onCloseFragment()
+        super.onStop()
+    }
+
     /**
      * Restore menu buttons background
      *
@@ -120,7 +126,7 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
     fun resetButtons(){
 
         for ( button in menuButtons ){
-            button.setBackgroundResource( button_bg )
+            button.setBackgroundResource( btn_fadeleft_bg )
             button.animate().scaleX(1F)
             button.animate().scaleY(1F)
         }
@@ -134,11 +140,11 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
      */
     fun clickButton(view: View){
 
-        SoundUtils.onClickBtn( applicationContext )
+        SoundUtils.onClickBtn( this )
 
         resetButtons()
 
-        view.setBackgroundResource( button_bg_click )
+        view.setBackgroundResource( btn_fadeleft_bg_2 )
         view.animate().scaleX(1.05F)
         view.animate().scaleY(1.05F)
 
@@ -151,6 +157,8 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
      */
     fun cargarFragment(fragment: Fragment){
 
+        currentFragment = fragment
+
         // Al cargar un fragment, desplaza el menú
         binding.mainMenuButtons.animate().translationX(600F)
 
@@ -159,14 +167,19 @@ class MainActivity : AppCompatActivity(), OnFragmentActionsListener {
         fragmentIntercambio.commit()
     }
 
-    override fun onClickFragmentButton() {
-        Toast.makeText(this, "Hola, he pulsado un fragment", Toast.LENGTH_SHORT).show()
+
+    override fun onClickFragmentButton( detail: String, id: Int, data: Unit? ) {
+//        Toast.makeText(this, "Has cerrado la ventana de login", Toast.LENGTH_SHORT).show()
     }
+
 
     override fun onCloseFragment() {
 
+        supportFragmentManager.beginTransaction().remove( currentFragment!! ).commit()
+
         // Reposiciona el menú al cerrar el fragment
         binding.mainMenuButtons.animate().translationX(0F)
+        currentFragment = null
     }
 
 

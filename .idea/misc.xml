@@ -3,13 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable-v24/banner_clickable.xml" value="0.33" />
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.37864583333333335" />
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable-v24/section_roundedbright_borders.xml" value="0.37864583333333335" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/animate_sprite.xml" value="0.3828125" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/border_bottom_light.xml" value="0.3828125" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/border_updown_blue.xml" value="0.3828125" />
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/btn_fadeleft_bg_2.xml" value="0.37864583333333335" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/btn_rounded_blue.xml" value="0.22239583333333332" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/btn_rounded_green.xml" value="0.3828125" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/button_bg.xml" value="0.37864583333333335" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/button_bg_click.xml" value="0.37864583333333335" />
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/ic_arrow_forward_24.xml" value="0.37864583333333335" />
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.3828125" />
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/ic_favorite_24.xml" value="0.37864583333333335" />
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.37864583333333335" />
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/ic_search_24.xml" value="0.37864583333333335" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/login_bg_radius.xml" value="0.3828125" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/drawable/tabs_bg.xml" value="0.3828125" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/activity_fullscreen.xml" value="0.3523550724637681" />
@@ -17,10 +26,13 @@
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/activity_splash.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/animation_sprite_male_1.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/fragment_adventures.xml" value="0.34148550724637683" />
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/fragment_character.xml" value="0.36141304347826086" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/fragment_gallery.xml" value="0.25" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/fragment_lobby.xml" value="0.33" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/item_dog.xml" value="0.33" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/main_video_background.xml" value="0.25" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/male_1_animation.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/layout/sprite_item.xml" value="0.36666666666666664" />
@@ -28,6 +40,7 @@
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/menu/equipmentMenu.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/menu/mainmenu.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Android/GameApp/app/src/main/res/menu/stats_menu.xml" value="0.23854166666666668" />
+        <entry key="..\:/Projects/Android/GameApp/app/src/main/res/menu/top_app_bar.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
@@ -36,5 +49,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.34148550724637683" />
+      </ProjectState>
+    </option>
   </component>
 </project>

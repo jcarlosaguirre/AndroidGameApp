@@ -3,7 +3,6 @@ package com.example.gameapp.ui.login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,21 +20,21 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  * Use the [LoginFragment.newInstance] factory method to
  * create an instance of this fragment.
+ *
+ * Handle events related to login process.
  */
 class LoginFragment : Fragment() {
-
-
 
     // Binding
     private lateinit var _binding: FragmentLoginBinding
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+//    private var param1: String? = null
+//    private var param2: String? = null
 
     private var listener: OnFragmentActionsListener? = null
 
@@ -55,14 +54,13 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Cerrar fragment de login
+        // Close login fragment button
         val btClose = binding.btCloseLogin
         btClose.setOnClickListener {
             listener?.onCloseFragment()
-            closeLogin()
         }
 
-        // Abrir fragment de login
+        // Login process
         val btLogin = binding.btLogin
         btLogin.setOnClickListener{
             accessLogin()
@@ -73,10 +71,10 @@ class LoginFragment : Fragment() {
 
         super.onCreate(savedInstanceState)
 
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+//        arguments?.let {
+//            param1 = it.getString(ARG_PARAM1)
+//            param2 = it.getString(ARG_PARAM2)
+//        }
     }
 
     override fun onCreateView(
@@ -109,16 +107,14 @@ class LoginFragment : Fragment() {
             }
     }
 
-    private fun closeLogin(){
-        parentFragmentManager.beginTransaction().remove(this).commit()
-        listener?.onClickFragmentButton()
-    }
-
+    /**
+     * Login user
+     *
+     */
     private fun accessLogin(){
-        Log.i("login", "login")
+
         var homeIntent = Intent(requireActivity(), HomeActivity::class.java )
         startActivity( homeIntent )
-
 
     }
 }
